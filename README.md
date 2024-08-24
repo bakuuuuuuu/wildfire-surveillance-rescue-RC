@@ -70,7 +70,7 @@
 ---
 
 ## 프로젝트 보고서 요약
-### [**🔗 보고서 바로가기**]([https://neighborly-goal-bcc.notion.site/86f809ad5b794106b5941114d4377b67?v=16ddbdec031b4dafbe9e2bb8c0cd5a3d&pvs=4](https://www.notion.so/YOLOv5-RC-11c6ccbcf63f4a8987c79541a7afbe07?pvs=4)
+### [**🔗 보고서 바로가기**](https://www.notion.so/YOLOv5-RC-11c6ccbcf63f4a8987c79541a7afbe07?pvs=4)
 
 ---
 ## Installation & Setup
