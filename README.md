@@ -12,7 +12,7 @@
 
 프로젝트의 시연 영상을 확인해보세요:
 
-[![데모 영상 보기](https://img.youtube.com/vi/E_KFmdy8OSw/0.jpg)](https://youtu.be/E_KFmdy8OSw)
+[![데모 영상 보기](https://img.youtube.com/vi/qTjb0LFu7_o/0.jpg)](https://youtube.com/shorts/qTjb0LFu7_o)
 
 
 ## Project Description
