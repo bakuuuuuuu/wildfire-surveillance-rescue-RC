@@ -126,6 +126,57 @@
   - #### 문제 해결:
      권한 문제가 없는 네이버 클라우드 메시지 서비스를 사용하여 메시지 전송 기능을 구현했습니다. 이로써 필요한 경고 메시지를 원활하게 전송할 수 있게 되었습니다.
 
+   ```python
+access_key_id = "QibE8Vzqq5UnfLbZy5t4" #sms메시지를 전송하기 위해 가입한 api서비스의 액세스 키 값 정의(서비스:네이버 클라우드 메시징 서비스)
+api_secret_key = "3OhNMrLcy9IIcrtGHC0DAqUavdg8KoVJhzvulk4p" #사용자 구분용 시크릿 키
+url = "https://sens.apigw.ntruss.com" #메시징서비스 url
+phone_number = "01056407137" #메시지를 받는 전화번호
+message = "object detected. please check the screen" #문자 내용
+
+# HMAC-SHA256 서명을 생성하는 함수
+def make_signature():
+    timestamp = int(time.time() * 1000) # 현재 시간을 Unix 타임스탬프로 가져옴
+    timestamp = str(timestamp) # 타임 스탬프를 문자열로 변환
+
+    secret_key = bytearray(api_secret_key, 'UTF-8') # 시크릿 키를 바이트 배열로 변환
+    method = "POST" # HTTP 메서드를 "POST"로 설정
+    uri = f"/sms/v2/services/ncp:sms:kr:308494219145:kjw/messages" # SMS 전송 API의 URI 설정
+    message = f"{method} {uri}\n{timestamp}\n{access_key_id}" # 서명할 문자열 생성
+    message = message.encode('UTF-8') # 메시지를 UTF-8로 인코딩
+
+    signature = hmac.new(secret_key, message, digestmod=hashlib.sha256).digest() # HMAC-SHA256 서명 생성
+    signature = base64.b64encode(signature) # 서명을 base64로 인코딩
+    return signature.decode('UTF-8'), timestamp # 서명을 디코딩하여 반환, 타임스탬프와 함께 반환
+
+# SMS 메시지 전송 함수
+def send_sms(phone_number, message):
+    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:308494219145:kjw/messages"
+    # SMS 전송 API의 엔드포인트 URL
+    signature, timestamp = make_signature()
+    # make_signature 함수를 호출하여 서명과 타임스탬프 생성
+    headers = { # API 호출에 필요한 HTTP 헤더 설정
+        "Content-Type": "application/json; charset=utf-8",
+        "x-ncp-apigw-timestamp": timestamp,
+        "x-ncp-iam-access-key": access_key_id,
+        "x-ncp-apigw-signature-v2": signature,
+    }
+    data = { # JSON 형식의 메시지 데이터 설정
+        "type": "SMS",
+        "contentType": "COMM",
+        "from": "01056407137",
+        "content": message,
+        "subject": "SENS",
+        "messages": [
+            {
+                "to": phone_number,
+            }
+        ]
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    # 설정된 헤더와 데이터를 사용하여 POST 요청 전송
+    print(response.content) # API 호출의 응답 내용 출력
+  ```
+
 ---
 
 ## 결과
