@@ -127,11 +127,11 @@
      권한 문제가 없는 네이버 클라우드 메시지 서비스를 사용하여 메시지 전송 기능을 구현했습니다. 이로써 필요한 경고 메시지를 원활하게 전송할 수 있게 되었습니다.
 
    ```python
-access_key_id = "QibE8Vzqq5UnfLbZy5t4" #sms메시지를 전송하기 위해 가입한 api서비스의 액세스 키 값 정의(서비스:네이버 클라우드 메시징 서비스)
-api_secret_key = "3OhNMrLcy9IIcrtGHC0DAqUavdg8KoVJhzvulk4p" #사용자 구분용 시크릿 키
-url = "https://sens.apigw.ntruss.com" #메시징서비스 url
-phone_number = "01056407137" #메시지를 받는 전화번호
-message = "object detected. please check the screen" #문자 내용
+access_key_id = "YOUR_KEY_ID" #sms메시지를 전송하기 위해 가입한 api서비스의 액세스 키 값 정의(서비스:네이버 클라우드 메시징 서비스)
+api_secret_key = "YOUR_SECRET_KEY" #사용자 구분용 시크릿 키
+url = "YOUR_URL" #메시징서비스 url
+phone_number = "YOUR_PHONENUMBER" #메시지를 받는 전화번호
+message = "물체가 감지되었습니다. 화면을 확인해주세요." #문자 내용
 
 # HMAC-SHA256 서명을 생성하는 함수
 def make_signature():
@@ -140,7 +140,7 @@ def make_signature():
 
     secret_key = bytearray(api_secret_key, 'UTF-8') # 시크릿 키를 바이트 배열로 변환
     method = "POST" # HTTP 메서드를 "POST"로 설정
-    uri = f"/sms/v2/services/ncp:sms:kr:308494219145:kjw/messages" # SMS 전송 API의 URI 설정
+    uri = f"YOUR_URL" # SMS 전송 API의 URI 설정
     message = f"{method} {uri}\n{timestamp}\n{access_key_id}" # 서명할 문자열 생성
     message = message.encode('UTF-8') # 메시지를 UTF-8로 인코딩
 
@@ -150,7 +150,7 @@ def make_signature():
 
 # SMS 메시지 전송 함수
 def send_sms(phone_number, message):
-    url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:308494219145:kjw/messages"
+    url = "YOUR_URL"
     # SMS 전송 API의 엔드포인트 URL
     signature, timestamp = make_signature()
     # make_signature 함수를 호출하여 서명과 타임스탬프 생성
@@ -163,7 +163,7 @@ def send_sms(phone_number, message):
     data = { # JSON 형식의 메시지 데이터 설정
         "type": "SMS",
         "contentType": "COMM",
-        "from": "01056407137",
+        "from": "PHONENUMBER",
         "content": message,
         "subject": "SENS",
         "messages": [
